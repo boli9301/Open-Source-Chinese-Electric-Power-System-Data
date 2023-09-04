@@ -7,12 +7,12 @@ This associated data has been developed for Chinese generation expansion plannin
 The [Data](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/tree/main/Data) folder contains data in an open `csv` format and visualization tool. Currently datasets are included in the following formats:
 -[Power plant database of Guangxi] include fossil fuel generators, varaiable renewable energy generators in plant level.
 
-The figure is a demonstrate of Open-Source Chinese Power System. The transmisison line information comes from [OpenStreetMap(OSM)](https://www.openstreetmap.org/#map=11/22.3567/114.1363) that is "free and editable map of the world".
+The figure is a demonstrate of Open-Source Chinese Power System. The transmisison line information comes from [OpenStreetMap(OSM)](https://www.openstreetmap.org/#map=11/22.3567/114.1363) that is "free and editable map of the world". The installed capacity of coal, hydro, wind, solar, nuclear, and gas power plant in Guangxi by 2022 is 19.2GW, 21.8GW, 7.0GW, 3.2GW, 2GW, and 0.001GW, respectively.
 
 ![Fig-Power System data  of Guangxi](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/assets/46950666/aa8a76ad-c80a-4f06-8533-545b45ce9760)
 
 # DATA USE DISCLAIMER AGREEMENT
-These data (“Data”) comes from variour data sources that is organized by our group.
+These data (“Data”) comes from variour data sources that is organized by our group. The visualization tool is developed by Ruotao Yu.
 
 # Reference
 1. Bo Li, Minyou Chen, Haiwang Zhong, Daniel M. Kammen and Xuyang Li, "Open-Source Chinese Power System with High Spatial and Temporal Resolution," 2022 5th International Conference on Energy, Electrical and Power Engineering (CEEPE), Chongqing, China, 2022, pp. 315-321.
