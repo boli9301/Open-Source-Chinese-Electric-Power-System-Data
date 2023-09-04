@@ -4,9 +4,10 @@ This repository is for the Open-Source Chinese Power System with High Spatial an
 
 This associated data has been developed for Chinese generation expansion planning which can be found in [2](https://www.sciencedirect.com/science/article/pii/S030142152030673X),[3](https://www.cell.com/iscience/fulltext/S2589-0042(21)01256-6),[4](https://www.sciencedirect.com/science/article/pii/S0306261921016378). 
 
-The [Data](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/blob/main/Data/SourceData/Power%20plant%20database%20of%20Guangxi.xlsx) folder contains data in an open `csv` format and visualization tool. Currently datasets are included in the following formats:
+The [Data](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/tree/main/Data) folder contains data in an open `csv` format and visualization tool. Currently datasets are included in the following formats:
 -[Power plant database of Guangxi] include fossil fuel generators, varaiable renewable energy generators in plant level.
 
+The figure is a demonstrate of Open-Source Chinese Power System. The transmisison line information comes from OpenStreetMap(OSM) that is "free and editable map of the world".
 ![微信截图_20230904093413](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/assets/46950666/4b8220cc-eac1-42a7-bd00-f73247d7f941)
 
 # Reference
