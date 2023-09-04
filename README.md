@@ -8,7 +8,10 @@ The [Data](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System
 -[Power plant database of Guangxi] include fossil fuel generators, varaiable renewable energy generators in plant level.
 
 The figure is a demonstrate of Open-Source Chinese Power System. The transmisison line information comes from OpenStreetMap(OSM) that is "free and editable map of the world".
-![微信截图_20230904093413](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/assets/46950666/4b8220cc-eac1-42a7-bd00-f73247d7f941)
+![Fig-Power System data  of Guangxi](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/assets/46950666/cf334b9d-79f3-4781-8b2b-a069bae62d84)
+
+# DATA USE DISCLAIMER AGREEMENT
+These data (“Data”) comes from variour data sources that is organized by our group.
 
 # Reference
 1. Bo Li, Minyou Chen, Haiwang Zhong, Daniel M. Kammen and Xuyang Li, "Open-Source Chinese Power System with High Spatial and Temporal Resolution," 2022 5th International Conference on Energy, Electrical and Power Engineering (CEEPE), Chongqing, China, 2022, pp. 315-321.
