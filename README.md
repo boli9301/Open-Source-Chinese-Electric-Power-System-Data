@@ -9,7 +9,7 @@ This associated data has been developed for Chinese generation expansion plannin
 3. Xiaoli Zhang, Xueqin Cui, Bo Li, Patricia Hidalgo-Gonzalez, Daniel M Kammen, Ji Zou, Ke Wang, Immediate actions on coal phaseout enable a just low-carbon transition in China’s power sector, Applied Energy, Volume 308, 2022, 118401.
 4. Guangzhi Yin,Bo Li,Natalie Fedorova,Patricia Hidalgo-Gonzalez,Daniel M. Kammen,Maosheng Duan,"Orderly retire China's coal-fired power capacity via capacity payments to support renewable energy expansion",iScience, Volume 24, Issue 11, 103287, November 19, 2021.
 
-The [Data] folder contains data in an open `csv` format and visualization tool. Currently datasets are included in the following formats:
+The [Data](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/blob/main/Data/SourceData/Power%20plant%20database%20of%20Guangxi.xlsx) folder contains data in an open `csv` format and visualization tool. Currently datasets are included in the following formats:
 -[Power plant database of Guangxi] include fossil fuel generators, varaiable renewable energy generators in plant level.
 
 ![微信截图_20230904093413](https://github.com/boli9301/Open-Source-Chinese-Electric-Power-System-Data/assets/46950666/4b8220cc-eac1-42a7-bd00-f73247d7f941)
