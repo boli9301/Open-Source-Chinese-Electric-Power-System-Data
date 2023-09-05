@@ -170,7 +170,7 @@ def gx_grid_mapping(graph, figure_path, shapefile_path, plot_state):
     
     # Add the provincial border line
     # https://data.humdata.org/dataset/cod-ab-chn
-    gdf_provincial = gpd.read_file()
+    gdf_provincial = gpd.read_file(shapefile_path)
 
     # Plot the figure
     if plot_state == 1:
