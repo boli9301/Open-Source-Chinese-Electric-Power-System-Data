@@ -1,13 +1,3 @@
-# import the necessary dependencies
-import pandas as pd
-import numpy as np
-from pathlib import Path
-import matplotlib
-import osmnx as ox
-import geopandas as gpd
-import matplotlib.pyplot as plt
-
-
 # Import the osm data of the country designated by parameter "place"
 # Save cache into the folder "cache"
 # Save the constructed model as "graph.graphml"
@@ -23,10 +13,10 @@ def osm_data_import_os(place, network, filter, save_path, plot_state):
     except GEOSException:
         pass
     
-    # save graph as graphml
-    ox.save_graphml(G, save_path + "/guangxi_graph.graphml")
+    # Save graph as graphml
+    ox.save_graphml(G, save_path + "/GuangXiGraph.graphml")
     
-    # calculate basic street network metrics and display average circuity
+    # Calculate basic street network metrics and display average circuitry
     stats = ox.basic_stats(G)
     print(stats)
     
@@ -40,7 +30,6 @@ def osm_data_import_os(place, network, filter, save_path, plot_state):
 # lon_name is the column name for longitude
 # lat_name is the column name for latitude
 def df_to_gdf(df, lon_name, lat_name):
-    import pandas as pd
     import geopandas as gpd
     from shapely.geometry import Point
     
@@ -58,20 +47,21 @@ def df_to_gdf(df, lon_name, lat_name):
 def infra_data_import():
     import pandas as pd
     import geopandas as gpd
+    import numpy as np
     
-    base = "./data/plot_data/infra_data/"
-    atomic_data = base + "atomic.csv"
-    solar_data = base + "solar.xlsx"
-    thermal_data = base + "thermal.csv"
-    wind_data = base + "wind.xlsx"
-    gas_data = base + "gas.csv"
-    water_data = base + "water.xlsx"
+    base = "./Data/SourceData/Power plant database of Guangxi.xlsx"
+    atomic_data = "nuclear power plant"
+    solar_data = "solar power plant"
+    thermal_data = "coal power plant"
+    wind_data = "wind power plant"
+    gas_data = "gas power plant"
+    water_data = "hydro power plant"
     
     # Import the shapefile of interested place
-    gdf_provincial = gpd.read_file("./data/shape_data/guangxi/guangxi.shp")
+    gdf_provincial = gpd.read_file("./Data/ShapeData/GuangXi/guangxi.shp")
     
     # Import the data
-    atomic = pd.read_csv(atomic_data, index_col=None)
+    atomic = pd.read_excel(base, index_col=None, sheet_name=atomic_data)
     atomic.rename(columns = {'capacity_mw':'MW'}, inplace = True)
     atomic = atomic[atomic["country"] == "CHN"]
     
@@ -87,53 +77,53 @@ def infra_data_import():
     atomic = df_to_gdf(atomic, "longitude", "latitude")
     atomic = gpd.sjoin(atomic, gdf_provincial, how='inner', op='within')
 
-    gas = pd.read_csv(gas_data, index_col=None)
+    gas = pd.read_excel(base, index_col=None, sheet_name=gas_data)
     gas.rename(columns = {'capacity_mw':'MW'}, inplace = True)
     gas = gas[gas["province.1"] == "Guangxi"]
     gas = gas[["MW","longitude", "latitude"]]
-    gas = gas.append(gas_0, ignore_index = True)
+    gas = gas._append(gas_0, ignore_index = True)
     gas = gas.reset_index()
     gas = df_to_gdf(gas, "longitude", "latitude")
     gas = gpd.sjoin(gas, gdf_provincial, how='inner', op='within')
     
-    thermal = pd.read_csv(thermal_data, index_col=None, encoding = "ISO-8859-1", on_bad_lines='skip')
+    thermal = pd.read_excel(base, index_col=None, sheet_name=thermal_data)
     thermal.rename(columns = {'Capacity_MW':'MW', "Longitude":"longitude", "Latitude":"latitude"}, inplace = True)
     thermal = thermal[thermal["province"] == "Guangxi"]
     thermal = thermal[["MW","longitude", "latitude"]]
-    thermal = thermal.append(thermal_0, ignore_index = True)
+    thermal = thermal._append(thermal_0, ignore_index = True)
     thermal = thermal.reset_index()
     thermal = df_to_gdf(thermal, "longitude", "latitude")
     thermal = gpd.sjoin(thermal, gdf_provincial, how='inner', op='within')
     
-    water = pd.read_excel(water_data, index_col=None)
+    water = pd.read_excel(base, sheet_name=water_data, index_col=None)
     water.rename(columns = {'Install_Nom':'MW', "Lon_P_X":"longitude", "Lat_P_Y":"latitude"}, inplace = True)
     water = water[water["Province"] == "Guangxi"]
     water = water[["MW","longitude", "latitude"]]
-    water = water.append(water_0, ignore_index = True)
+    water = water._append(water_0, ignore_index = True)
     water = water.reset_index()
     water = df_to_gdf(water, "longitude", "latitude")
     water = gpd.sjoin(water, gdf_provincial, how='inner', op='within')
     
     #########################################################
     # No coordinates
-    solar = pd.read_excel(solar_data, index_col=None)
-    solar['MW'] = solar['MW'].replace('', np.nan)
+    solar = pd.read_excel(base, sheet_name=solar_data, index_col=None)
+    solar['MW'] = solar['装机容量(MW)'].replace('', np.nan)
     solar = solar.dropna(subset=['MW'])
     solar['编号'] = solar['编号'].replace('编号', np.nan)
     solar = solar.dropna(subset=['编号'])
     solar = solar[["MW","longitude", "latitude"]]
-    solar = solar.append(solar_0, ignore_index = True)
+    solar = solar._append(solar_0, ignore_index = True)
     solar = solar.reset_index()
     solar = df_to_gdf(solar, "longitude", "latitude")
     solar = gpd.sjoin(solar, gdf_provincial, how='inner', op='within')
     
-    wind = pd.read_excel(wind_data, index_col=None)
-    wind['MW'] = wind['MW'].replace('', np.nan)
+    wind = pd.read_excel(base, sheet_name=wind_data, index_col=None)
+    wind['MW'] = wind['装机容量(MW)'].replace('', np.nan)
     wind = wind.dropna(subset=['MW'])
     wind['编号'] = wind['编号'].replace('编号', np.nan)
     wind = wind.dropna(subset=['编号'])
     wind = wind[["MW","longitude", "latitude"]]
-    wind = wind.append(wind_0, ignore_index = True)
+    wind = wind._append(wind_0, ignore_index = True)
     wind = wind.reset_index()
     wind = df_to_gdf(wind, "longitude", "latitude")
     wind = gpd.sjoin(wind, gdf_provincial, how='inner', op='within')
@@ -147,7 +137,7 @@ def gx_grid_mapping(graph, path, plot_state):
     
     # Add the provincial border line
     # https://data.humdata.org/dataset/cod-ab-chn
-    gdf_provincial = gpd.read_file("./data/shape_data/guangxi/guangxi.shp")
+    gdf_provincial = gpd.read_file("./Data/ShapeData/GuangXi/guangxi.shp")
 
     # Plot the figure
     if plot_state == 1:
@@ -194,18 +184,19 @@ def gx_grid_mapping(graph, path, plot_state):
         ax.set_xlim((west - margin_ew, east + margin_ew))
         
         # Save and show figure
-        plt.savefig(path + "/gx_distribution.png", dpi=900)
+        plt.savefig(path + "/GuangXiDistribution.png", dpi=900)
         plt.show()
 
     return graph
 
 if __name__ == "__main__":
+    import osmnx as ox
     
     # Import the osm power data
-    osm_data, osm_stats = osm_data_import_os('Guangxi, China', 'all', '["power"~"line"]', "./data/intermediate", 0)
+    #osm_data, osm_stats = osm_data_import_os('Guangxi, China', 'all', '["power"~"line"]', "./Data/Intermediate", 0)
     
-    graph = ox.load_graphml("./data/intermediate/gx_power_graph.graphml")
-    gx_grid_mapping(graph, "./result/figure", 1)
+    graph = ox.load_graphml("./Data/Intermediate/GuangXiPower.graphml")
+    gx_grid_mapping(graph, "./Result/Figure", 1)
     
 
     
