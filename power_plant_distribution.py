@@ -1,3 +1,4 @@
+# coding: utf-8
 import pandas as pd
 import numpy as np
 import geopandas as gpd
@@ -7,6 +8,7 @@ import matplotlib.pyplot as plt
 from shapely.wkt import loads
 from matplotlib.font_manager import FontProperties
 import seaborn as sns
+from matplotlib.patches import Patch, Circle
 
 sns.set_style({'font.family':'serif', 'font.serif':'Times New Roman'})
 sns.set_theme(style="whitegrid")
@@ -34,7 +36,6 @@ def df_to_gdf(df, lon_name="Longitude", lat_name="Latitude"):
     return gdf
 
 def data_filter(df, year):
-    print(df)
     df = df[["Country", "Capacity (MW)", "Start year", "Retired year", "Latitude", "Longitude", ]]
     df = df.dropna(subset=['Longitude', 'Latitude', "Start year", "Country"])
     # By country
@@ -53,12 +54,67 @@ def data_filter(df, year):
 
 def visualization(gdf_list, provincial_gdf, year):
     save_path = "./Result/distribution_" + str(year) + ".png"
+    color_list = ["#001427", "#0077b6", "#d62828", "#fca311","#70e000"]
     
+    plt.figure(figsize=(20, 15))
+    provincial_gdf.boundary.plot(linewidth=0.5, color="#adb5bd", zorder=1)
+    bounds = provincial_gdf.total_bounds
+    ax = plt.gca()
     
+    # Set the aspect of the plot to be equal
+    ax.set_aspect('equal')
+    extend = 0
+    ax.set_xlim(bounds[0]-extend, bounds[2]+extend)
+    ax.set_ylim(bounds[1]-extend, bounds[3]+extend)
+    ax.axis('off')
     
+    ratio = 1
     
+    for iter in range(len(gdf_list)):
+        temp_gdf = gdf_list[iter]
+        temp_color = color_list[iter]
+        for index, row in temp_gdf.iterrows():
+            ax.scatter(row.geometry.x, row.geometry.y, s=ratio*row["Capacity (MW)"], color=temp_color, linewidths=0, edgecolor=None, alpha=0.5)
+
+    # Define legend for circle sizes
+    circle_sizes = [1, 0.5, 0.1]  # Define circle sizes for legend
+    legend_circle_labels = ['1 MW', '0.5 MW', '0.1 MW']  # Corresponding labels
     
+    former_rad = 0
+    for iter in range(len(circle_sizes)):
+        rad = circle_sizes[iter]
+        text = legend_circle_labels[iter]
+        if iter == 0:
+            bound = bounds[1] + 0.11
+        else:
+            bound = bound + former_rad + rad + 0.1
+        circle = Circle((bounds[0]-0.1, bound), radius=rad*ratio, color="#8d99ae", alpha=0.5, clip_on=False)
+        ax.add_artist(circle)
+        ax.text(bounds[0] + rad, bound, text, verticalalignment='center', fontfamily='Times New Roman')
+        former_rad = rad
+        
+
+
+
+    # Define custom legend handles and labels
+    legend_handles = [
+        Patch(color='#001427', label='Coal'),
+        Patch(color="#0077b6", label='Wind'),
+        Patch(color="#d62828", label='Atomic'),
+        Patch(color="#fca311", label='Solar'),
+        Patch(color="#70e000", label='Wind'),
+    ]
     
+    # Add legend to the plot
+    legend = plt.legend(handles=legend_handles, loc='upper left', frameon=False,
+                        bbox_to_anchor=(0, 0.98, 1, 0.2), mode="expand", borderaxespad=0, ncol=5)
+    
+    for text in legend.get_texts():
+        text.set_fontfamily('Times New Roman')
+
+    #plt.tight_layout()
+    plt.savefig(save_path, dpi=900)
+    plt.close()
     
     
     return None
@@ -85,9 +141,7 @@ if __name__ == "__main__":
         gdf_list = []
         for df in df_list:
             temp_gdf = data_filter(df, year)
-            
             gdf = gpd.sjoin(temp_gdf, gdf_provincial, how='inner', op='within')
-            print(gdf)
             gdf_list.append(gdf)
             
         # Data visualization
