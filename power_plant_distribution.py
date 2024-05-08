@@ -77,24 +77,18 @@ def visualization(gdf_list, provincial_gdf, year):
             ax.scatter(row.geometry.x, row.geometry.y, s=ratio*row["Capacity (MW)"], color=temp_color, linewidths=0, edgecolor=None, alpha=0.5)
 
     # Define legend for circle sizes
-    circle_sizes = [1, 0.5, 0.1]  # Define circle sizes for legend
-    legend_circle_labels = ['1 MW', '0.5 MW', '0.1 MW']  # Corresponding labels
+    circle_sizes = [200, 100, 50]  # Define circle sizes for legend
+    legend_circle_labels = ['200 MW', '100 MW', '50 MW']  # Corresponding labels
     
-    former_rad = 0
     for iter in range(len(circle_sizes)):
         rad = circle_sizes[iter]
         text = legend_circle_labels[iter]
         if iter == 0:
-            bound = bounds[1] + 0.11
+            bound = bounds[1] - 0.1
         else:
-            bound = bound + former_rad + rad + 0.1
-        circle = Circle((bounds[0]-0.1, bound), radius=rad*ratio, color="#8d99ae", alpha=0.5, clip_on=False)
-        ax.add_artist(circle)
-        ax.text(bounds[0] + rad, bound, text, verticalalignment='center', fontfamily='Times New Roman')
-        former_rad = rad
-        
-
-
+            bound = bound + 0.3
+        ax.scatter(bounds[0]-0.1, bound, s=ratio*rad, color="#8d99ae", linewidths=0, edgecolor=None, alpha=0.5, clip_on=False)
+        ax.text(bounds[0] + 0.1, bound, text, verticalalignment='center', fontfamily='Times New Roman')
 
     # Define custom legend handles and labels
     legend_handles = [
