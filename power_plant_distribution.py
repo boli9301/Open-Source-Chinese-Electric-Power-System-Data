@@ -40,9 +40,10 @@ def data_filter(df, year):
     df = df.dropna(subset=['Longitude', 'Latitude', "Start year", "Country"])
     # By country
     df = df[df["Country"] == "China"]
-    df["Retired year"] = df["Retired year"].fillna("2024")
+    df["Retired year"] = df["Retired year"].fillna(2024)
     df.astype({"Capacity (MW)":float, "Start year":int, "Retired year":int, "Latitude":float, "Longitude":float})
     df = df[df["Start year"] <= year]
+    df = df[df["Retired year"] >= year]
 
     # Merge those with the same "Plant name"
     df = df.groupby(['Latitude', 'Longitude'], as_index=False)['Capacity (MW)'].sum()
