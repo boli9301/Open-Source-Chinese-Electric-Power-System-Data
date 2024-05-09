@@ -94,8 +94,8 @@ def visualization(gdf_list, provincial_gdf, year):
     # Define custom legend handles and labels
     legend_handles = [
         Patch(color='#001427', label='Coal'),
-        Patch(color="#0077b6", label='Wind'),
-        Patch(color="#d62828", label='Atomic'),
+        Patch(color="#0077b6", label='Hydro'),
+        Patch(color="#d62828", label='Nuclear'),
         Patch(color="#fca311", label='Solar'),
         Patch(color="#70e000", label='Wind'),
     ]
