@@ -54,7 +54,7 @@ def data_filter(df, year):
     return gdf
 
 def visualization(gdf_list, provincial_gdf, year):
-    save_path = "./Result/distribution_" + str(year) + ".png"
+    save_path = "./Result/china_distribution_" + str(year) + ".png"
     color_list = ["#001427", "#0077b6", "#d62828", "#fca311","#70e000"]
     
     plt.figure(figsize=(20, 15))
@@ -69,7 +69,7 @@ def visualization(gdf_list, provincial_gdf, year):
     ax.set_ylim(bounds[1]-extend, bounds[3]+extend)
     ax.axis('off')
     
-    ratio = 1
+    ratio = 0.08
     
     for iter in range(len(gdf_list)):
         temp_gdf = gdf_list[iter]
@@ -78,8 +78,8 @@ def visualization(gdf_list, provincial_gdf, year):
             ax.scatter(row.geometry.x, row.geometry.y, s=ratio*row["Capacity (MW)"], color=temp_color, linewidths=0, edgecolor=None, alpha=0.5)
 
     # Define legend for circle sizes
-    circle_sizes = [200, 100, 50]  # Define circle sizes for legend
-    legend_circle_labels = ['200 MW', '100 MW', '50 MW']  # Corresponding labels
+    circle_sizes = [1000, 500, 100]  # Define circle sizes for legend
+    legend_circle_labels = ['1000 MW', '500 MW', '100 MW']  # Corresponding labels
     
     for iter in range(len(circle_sizes)):
         rad = circle_sizes[iter]
@@ -87,9 +87,9 @@ def visualization(gdf_list, provincial_gdf, year):
         if iter == 0:
             bound = bounds[1] - 0.1
         else:
-            bound = bound + 0.3
+            bound = bound + 2
         ax.scatter(bounds[0]-0.1, bound, s=ratio*rad, color="#8d99ae", linewidths=0, edgecolor=None, alpha=0.5, clip_on=False)
-        ax.text(bounds[0] + 0.1, bound, text, verticalalignment='center', fontfamily='Times New Roman')
+        ax.text(bounds[0] + 0.8, bound, text, verticalalignment='center', fontfamily='Times New Roman')
 
     # Define custom legend handles and labels
     legend_handles = [
@@ -126,7 +126,8 @@ if __name__ == "__main__":
     wind_df = pd.read_excel(data_base_path + "Global-Wind-Power-Tracker-May-2023" + ".xlsx", sheet_name="Data")
     df_list = [coal_df, hydro_df, nuclear_df, solar_df, wind_df]
     
-    gdf_provincial = gpd.read_file("./Data/ShapeData/GuangXi/guangxi.shp")
+    #gdf_provincial = gpd.read_file("./Data/ShapeData/GuangXi/guangxi.shp")
+    gdf_provincial = gpd.read_file("./Data/ShapeData/China/chn_admbnda_adm1_ocha_2020.shp")
     
     year_list = [2000, 2010, 2022]
     
